@@ -36,7 +36,6 @@ const numberList = [{letter:"one",num:"1"},{letter:"two",num:"2"},{letter:"three
 
 for(let i in data){
     var str = ""
-    var str2 = ""
     var firstnum = ""
     var lastnum = ""
     var num = ""
