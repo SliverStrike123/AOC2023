@@ -19,14 +19,10 @@ games.forEach((item) => {
     var rolls = item.rolls
     for (const roll of rolls) {
         var splitted = roll.split(", ").map(ele => {const [count,type] = ele.split(" "); return [+count,type]})
-        for(const item of splitted){
-            var obj = {
-                count: item[0],
-                type: item[1]
-            }
-            if((obj.type === "red" && obj.count > redLimit) ||
-               (obj.type === "blue" && obj.count > blueLimit) ||
-               (obj.type === "green" && obj.count > greenLimit)) {
+        for(const [count,type] of splitted){
+            if((type === "red" && count > redLimit) ||
+               (type === "blue" && count > blueLimit) ||
+               (type === "green" && count > greenLimit)) {
                 isTrue = false;
                 break;
             }
@@ -37,6 +33,37 @@ games.forEach((item) => {
         score+=item.gameID
     }
 })
-console.log(score)
 
 //part 2
+games = []
+score = 0
+data.forEach((game) => {
+    const [left,right] = game.split(": ");
+    games.push({
+        gameID: +(left.split(" ")[1]),
+        rolls: right.split("; "),
+        power: 0
+    })
+})
+
+games.forEach((item) => {
+    var red = 0
+    var green = 0
+    var blue = 0
+    item.rolls.forEach((roll) => {
+        var splitted = roll.split(", ").map(ele => {const [count,type] = ele.split(" "); return [+count,type]})
+        for(const [count,type] of splitted){
+            if(type === "red" && count > red){
+                red = count
+            }
+            if(type === "green" && count > green){
+                green = count
+            }
+            if(type === "blue" && count > blue){
+                blue = count
+            }
+        }
+    })
+    score += red*green*blue;
+})
+console.log(score)
